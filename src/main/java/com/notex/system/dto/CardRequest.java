@@ -1,6 +1,8 @@
-package com.notex.notes.dto;
+package com.notex.system.dto;
 
+import com.notex.system.models.Company;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -9,5 +11,7 @@ public class CardRequest {
     String title;
     @NotBlank
     String description;
-    LocalDate aperence;
+    LocalDate appearance;
+    @NotNull
+    Company company;
 }

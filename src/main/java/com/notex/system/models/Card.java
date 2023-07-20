@@ -1,7 +1,6 @@
-package com.notex.notes.models;
+package com.notex.system.models;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.notex.system.enums.Status;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,5 +16,7 @@ public class Card {
     String title;
     String description;
     LocalDateTime creation = LocalDateTime.now();
-    LocalDate aperence;
+    LocalDate appearance;
+    Company company;
+    Status status;
 }

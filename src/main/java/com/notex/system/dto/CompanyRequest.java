@@ -1,8 +1,8 @@
-package com.notex.notes.dto;
+package com.notex.system.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class CompanyResponse {
+public class CompanyRequest {
     @NotBlank
     String name;
     String code;
