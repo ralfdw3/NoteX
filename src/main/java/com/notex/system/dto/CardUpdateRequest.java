@@ -12,7 +12,6 @@ public class CardUpdateRequest {
     String id;
     @NotBlank
     String title;
-    @NotBlank
     String description;
     LocalDate appearance;
     @NotNull

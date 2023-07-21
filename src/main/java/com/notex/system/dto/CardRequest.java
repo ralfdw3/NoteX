@@ -9,7 +9,6 @@ import java.time.LocalDate;
 public class CardRequest {
     @NotBlank
     String title;
-    @NotBlank
     String description;
     LocalDate appearance;
     @NotNull

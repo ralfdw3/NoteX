@@ -1,7 +1,8 @@
 package com.notex.system.models;
 
 import com.notex.system.enums.Status;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,7 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Document(collection = "card")
-@Data
+@Getter
+@NoArgsConstructor
 public class Card {
     @Id
     String id;

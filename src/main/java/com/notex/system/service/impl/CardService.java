@@ -19,6 +19,7 @@ public class CardService implements CardServiceInterface {
     private final CardRepository cardRepository;
     private final ModelMapper modelMapper;
 
+    @Override
     @Transactional
     public CardResponse createCard(CardRequest request) {
         Card card = modelMapper.map(request, Card.class);
@@ -28,6 +29,7 @@ public class CardService implements CardServiceInterface {
         return modelMapper.map(card, CardResponse.class);
     }
 
+    @Override
     @Transactional
     public CardResponse updateCard(CardUpdateRequest request) {
         Card card = findCardById(request.getId());
@@ -42,6 +44,7 @@ public class CardService implements CardServiceInterface {
         return modelMapper.map(card, CardResponse.class);
     }
 
+    @Override
     @Transactional
     public CardResponse deleteCardById(String id) {
         Card card = findCardById(id);
