@@ -1,5 +1,6 @@
 package com.notex.system.models;
 
+import com.notex.system.dto.CompanyRequest;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,6 +23,11 @@ public class Company {
     String code;
     LocalDateTime creation = LocalDateTime.now();
     Boolean status = true;
+
+    public Company(CompanyRequest request) {
+        this.name = request.getName();
+        this.code = request.getCode();
+    }
 
     public void updateCompanyStatus(Boolean status) {
         this.status = status;

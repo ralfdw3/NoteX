@@ -1,5 +1,6 @@
 package com.notex.system.dto;
 
+import com.notex.system.models.Card;
 import com.notex.system.models.Company;
 import lombok.*;
 
@@ -17,4 +18,13 @@ public class CardResponse {
     LocalDateTime creation;
     LocalDate appearance;
     Company company;
+
+    public CardResponse(Card card) {
+        this.id = card.getId();
+        this.title = card.getTitle();
+        this.description = card.getDescription();
+        this.creation = card.getCreation();
+        this.appearance = card.getAppearance();
+        this.company = card.getCompany();
+    }
 }

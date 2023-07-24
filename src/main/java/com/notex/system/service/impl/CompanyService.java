@@ -8,7 +8,6 @@ import com.notex.system.models.Company;
 import com.notex.system.repository.CompanyRepository;
 import com.notex.system.service.CompanyServiceInterface;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,16 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class CompanyService implements CompanyServiceInterface {
 
     private final CompanyRepository companyRepository;
-    private final ModelMapper modelMapper;
 
     @Override
     @Transactional
     public CompanyResponse createCompany(CompanyRequest request) {
-        Company company = modelMapper.map(request, Company.class);
+        Company company = new Company(request);
 
         companyRepository.save(company);
 
-        return modelMapper.map(company, CompanyResponse.class);
+        return new CompanyResponse(company);
     }
 
     @Override
@@ -36,13 +34,14 @@ public class CompanyService implements CompanyServiceInterface {
 
         companyRepository.save(company);
 
-        return modelMapper.map(company, CompanyResponse.class);
+        return new CompanyResponse(company);
     }
 
     @Override
     public CompanyResponse getCompanyById(String id) {
         Company company = findCompanyById(id);
-        return modelMapper.map(company, CompanyResponse.class);
+
+        return new CompanyResponse(company);
     }
 
     @Override

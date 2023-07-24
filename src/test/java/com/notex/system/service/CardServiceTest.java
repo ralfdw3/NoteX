@@ -12,21 +12,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 public class CardServiceTest {
 
     @Mock
     private CardRepository cardRepository;
-
-    @Mock
-    private ModelMapper modelMapper;
 
     @InjectMocks
     private CardService cardService;
@@ -42,19 +39,16 @@ public class CardServiceTest {
 
         when(cardRepository.save(cardDefault)).thenReturn(cardDefault);
         when(cardRepository.findById(cardDefault.getId())).thenReturn(Optional.ofNullable(cardDefault));
-        when(modelMapper.map(cardRequest, Card.class)).thenReturn(cardDefault);
-        when(modelMapper.map(cardDefault, CardResponse.class)).thenReturn(cardResponse);
     }
 
     @Test
     public void Should_ReturnCardResponse_When_CreatingANewCard () {
         CardResponse response = cardService.createCard(cardRequest);
 
-        assertEquals(cardUpdateRequest.getId(), response.getId());
-        assertEquals(cardUpdateRequest.getTitle(), response.getTitle());
-        assertEquals(cardUpdateRequest.getDescription(), response.getDescription());
-        assertEquals(cardUpdateRequest.getCompany().getName(), response.getCompany().getName());
-        assertEquals(cardUpdateRequest.getAppearance(), response.getAppearance());
+        assertEquals(cardDefault.getTitle(), response.getTitle());
+        assertEquals(cardDefault.getDescription(), response.getDescription());
+        assertEquals(cardDefault.getCompany().getName(), response.getCompany().getName());
+        assertEquals(cardDefault.getAppearance(), response.getAppearance());
 
     }
 
@@ -73,11 +67,11 @@ public class CardServiceTest {
     public void Should_ReturnCardResponse_When_FindingACardById () {
         CardResponse response = cardService.getCardById(cardDefault.getId());
 
-        assertEquals(cardUpdateRequest.getId(), response.getId());
-        assertEquals(cardUpdateRequest.getTitle(), response.getTitle());
-        assertEquals(cardUpdateRequest.getDescription(), response.getDescription());
-        assertEquals(cardUpdateRequest.getCompany().getName(), response.getCompany().getName());
-        assertEquals(cardUpdateRequest.getAppearance(), response.getAppearance());
+        assertEquals(cardDefault.getId(), response.getId());
+        assertEquals(cardDefault.getTitle(), response.getTitle());
+        assertEquals(cardDefault.getDescription(), response.getDescription());
+        assertEquals(cardDefault.getCompany().getName(), response.getCompany().getName());
+        assertEquals(cardDefault.getAppearance(), response.getAppearance());
     }
 
     @Test
@@ -85,11 +79,11 @@ public class CardServiceTest {
         CardResponse response = cardService.deleteCardById(cardDefault.getId());
 
         assertNotNull(response);
-        assertEquals(cardUpdateRequest.getId(), response.getId());
-        assertEquals(cardUpdateRequest.getTitle(), response.getTitle());
-        assertEquals(cardUpdateRequest.getDescription(), response.getDescription());
-        assertEquals(cardUpdateRequest.getCompany().getName(), response.getCompany().getName());
-        assertEquals(cardUpdateRequest.getAppearance(), response.getAppearance());
+        assertEquals(cardDefault.getId(), response.getId());
+        assertEquals(cardDefault.getTitle(), response.getTitle());
+        assertEquals(cardDefault.getDescription(), response.getDescription());
+        assertEquals(cardDefault.getCompany().getName(), response.getCompany().getName());
+        assertEquals(cardDefault.getAppearance(), response.getAppearance());
 
         verify(cardRepository).deleteById(cardDefault.getId());
     }

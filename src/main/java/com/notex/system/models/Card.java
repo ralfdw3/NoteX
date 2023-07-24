@@ -1,5 +1,6 @@
 package com.notex.system.models;
 
+import com.notex.system.dto.CardRequest;
 import com.notex.system.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,11 @@ public class Card {
     LocalDate appearance;
     Company company;
     Status status;
+
+    public Card(CardRequest request) {
+        this.title = request.getTitle();
+        this.description = request.getDescription();
+        this.appearance = request.getAppearance();
+        this.company = request.getCompany();
+    }
 }

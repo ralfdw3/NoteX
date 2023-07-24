@@ -8,7 +8,6 @@ import com.notex.system.models.Card;
 import com.notex.system.repository.CardRepository;
 import com.notex.system.service.CardServiceInterface;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,16 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class CardService implements CardServiceInterface {
 
     private final CardRepository cardRepository;
-    private final ModelMapper modelMapper;
 
     @Override
     @Transactional
     public CardResponse createCard(CardRequest request) {
-        Card card = modelMapper.map(request, Card.class);
+        Card card = new Card(request);
 
         cardRepository.save(card);
 
-        return modelMapper.map(card, CardResponse.class);
+        return new CardResponse(card);
     }
 
     @Override
@@ -36,13 +34,13 @@ public class CardService implements CardServiceInterface {
 
         cardRepository.save(card);
 
-        return modelMapper.map(card, CardResponse.class);
+        return new CardResponse(card);
     }
 
     @Override
     public CardResponse getCardById(String id) {
         Card card = findCardById(id);
-        return modelMapper.map(card, CardResponse.class);
+        return new CardResponse(card);
     }
 
     @Override
@@ -51,7 +49,7 @@ public class CardService implements CardServiceInterface {
         Card card = findCardById(id);
         cardRepository.deleteById(id);
 
-        return modelMapper.map(card, CardResponse.class);
+        return new CardResponse(card);
     }
 
     private Card findCardById(String id){
