@@ -39,6 +39,7 @@ public class CardService implements CardServiceInterface {
         return modelMapper.map(card, CardResponse.class);
     }
 
+    @Override
     public CardResponse getCardById(String id) {
         Card card = findCardById(id);
         return modelMapper.map(card, CardResponse.class);
