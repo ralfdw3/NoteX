@@ -38,6 +38,14 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
+    @Transactional
+    public CompanyResponse updateCompany(Company company) {
+        companyRepository.save(company);
+
+        return new CompanyResponse(company);
+    }
+
+    @Override
     public CompanyResponse getCompanyById(String id) {
         Company company = findCompanyById(id);
 
@@ -48,7 +56,7 @@ public class CompanyService implements CompanyServiceInterface {
     @Transactional
     public void updateCompanyStatus(String id, Boolean status) {
         Company company = findCompanyById(id);
-        company.updateCompanyStatus(status);
+        updateCompany(company);
     }
 
     private Company findCompanyById(String id){

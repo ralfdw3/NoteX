@@ -2,8 +2,10 @@ package com.notex.system.dto;
 
 import com.notex.system.models.Company;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public class CompanyResponse {
     String id;
     String name;

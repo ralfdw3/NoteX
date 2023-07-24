@@ -1,5 +1,6 @@
 package com.notex.system.dto;
 
+import com.notex.system.models.Company;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,4 +14,10 @@ public class CompanyUpdateRequest {
     @NotBlank
     String name;
     String code;
+
+    public CompanyUpdateRequest(Company company) {
+        this.id = company.getId();
+        this.name = company.getName();
+        this.code = company.getCode();
+    }
 }

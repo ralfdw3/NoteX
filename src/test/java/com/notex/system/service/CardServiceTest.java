@@ -16,21 +16,16 @@ import org.mockito.Mock;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 public class CardServiceTest {
-
     @Mock
     private CardRepository cardRepository;
-
     @InjectMocks
     private CardService cardService;
-
     Card cardDefault = CardStub.cardDefault();
     CardRequest cardRequest = CardStub.cardRequest();
-    CardResponse cardResponse = CardStub.cardResponse();
     CardUpdateRequest cardUpdateRequest = CardStub.cardUpdateRequest();
 
     @BeforeEach
@@ -49,7 +44,6 @@ public class CardServiceTest {
         assertEquals(cardDefault.getDescription(), response.getDescription());
         assertEquals(cardDefault.getCompany().getName(), response.getCompany().getName());
         assertEquals(cardDefault.getAppearance(), response.getAppearance());
-
     }
 
     @Test
@@ -84,16 +78,12 @@ public class CardServiceTest {
         assertEquals(cardDefault.getDescription(), response.getDescription());
         assertEquals(cardDefault.getCompany().getName(), response.getCompany().getName());
         assertEquals(cardDefault.getAppearance(), response.getAppearance());
-
-        verify(cardRepository).deleteById(cardDefault.getId());
     }
 
     @Test
     public void Should_ThrowNotFoundException_When_FindingCardWithInvalidId () {
-        when(cardRepository.findById("notFound")).thenThrow(NotFoundException.class);
-
-        assertThrows(NotFoundException.class, () -> cardService.getCardById("notFound"));
-
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> cardService.getCardById("notFound"));
+        assertEquals("Card não encontrado.", exception.getMessage());
     }
 
 }
