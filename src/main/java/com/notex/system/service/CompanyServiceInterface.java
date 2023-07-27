@@ -5,6 +5,8 @@ import com.notex.system.dto.CompanyResponse;
 import com.notex.system.dto.CompanyUpdateRequest;
 import com.notex.system.models.Company;
 
+import java.util.List;
+
 public interface CompanyServiceInterface {
     CompanyResponse createCompany(CompanyRequest request);
     CompanyResponse updateCompany(Company company);
@@ -13,5 +15,8 @@ public interface CompanyServiceInterface {
 
     CompanyResponse getCompanyById(String id);
 
+    List<Company> getCompaniesBySearchTerm(String searchTerm);
+
     void updateCompanyStatus(String id, Boolean status);
+
 }

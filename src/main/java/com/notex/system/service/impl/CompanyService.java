@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CompanyService implements CompanyServiceInterface {
@@ -50,6 +52,16 @@ public class CompanyService implements CompanyServiceInterface {
         Company company = findCompanyById(id);
 
         return new CompanyResponse(company);
+    }
+
+    @Override
+    public List<Company> getCompaniesBySearchTerm(String searchTerm) {
+        List<Company> companies = companyRepository.findByNameContaining(searchTerm);
+        if (companies.isEmpty()){
+            throw new NotFoundException("Nenhuma empresa foi encontrada.");
+        }
+
+        return companies;
     }
 
     @Override

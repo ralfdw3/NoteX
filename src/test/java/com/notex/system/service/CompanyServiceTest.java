@@ -1,6 +1,5 @@
 package com.notex.system.service;
 
-import com.notex.system.dto.CardResponse;
 import com.notex.system.dto.CompanyRequest;
 import com.notex.system.dto.CompanyResponse;
 import com.notex.system.dto.CompanyUpdateRequest;
@@ -14,9 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -37,7 +39,7 @@ public class CompanyServiceTest {
 
         when(companyRepository.save(companyDefault)).thenReturn(companyDefault);
         when(companyRepository.findByIdAndStatusTrue(companyDefault.getId())).thenReturn(Optional.ofNullable(companyDefault));
-
+        when(companyRepository.findByNameContaining("validSearchTerm")).thenReturn(List.of(companyDefault));
     }
 
     @Test
@@ -86,6 +88,23 @@ public class CompanyServiceTest {
     public void Should_ThrowNotFoundException_When_FindingCompanyWithInvalidId () {
         NotFoundException exception = assertThrows(NotFoundException.class, () -> companyService.getCompanyById("notFound"));
         assertEquals("Empresa não encontrada.", exception.getMessage());
+    }
+
+    @Test
+    public void Should_ReturnListCompanies_When_FindingCompaniesBySearchTerm () {
+        List<Company> companies = companyService.getCompaniesBySearchTerm("validSearchTerm");
+
+        assertEquals(companies.get(0).getId(), "id");
+        assertEquals(companies.get(0).getName(), "name");
+        assertEquals(companies.get(0).getCode(), "code");
+        assertEquals(companies.get(0).getStatus(), true);
+        assertEquals(companies.get(0).getCreation().getDayOfMonth(), LocalDateTime.now().getDayOfMonth());
+    }
+
+    @Test
+    public void Should_ThrowNotFoundException_When_FindingCompaniesBySearchTerm () {
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> companyService.getCompaniesBySearchTerm("invalid"));
+        assertEquals("Nenhuma empresa foi encontrada.", exception.getMessage());
     }
 
     @Test
