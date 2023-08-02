@@ -21,18 +21,18 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     @Transactional
-    public CompanyResponse createCompany(CompanyRequest request) {
+    public Company createCompany(CompanyRequest request) {
         Company company = new Company(request);
 
         companyRepository.save(company);
 
-        return new CompanyResponse(company);
+        return company;
     }
 
     @Override
     @Transactional
     public CompanyResponse updateCompany(CompanyUpdateRequest request) {
-        Company company = findCompanyById(request.getId());
+        Company company = findCompanyById(request.getCode());
 
         companyRepository.save(company);
 
@@ -48,8 +48,8 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
-    public CompanyResponse getCompanyById(String id) {
-        Company company = findCompanyById(id);
+    public CompanyResponse getCompanyById(String code) {
+        Company company = findCompanyById(code);
 
         return new CompanyResponse(company);
     }
@@ -66,12 +66,12 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     @Transactional
-    public void updateCompanyStatus(String id, Boolean status) {
-        Company company = findCompanyById(id);
+    public void updateCompanyStatus(String code, Boolean status) {
+        Company company = findCompanyById(code);
         updateCompany(company);
     }
 
-    private Company findCompanyById(String id){
-        return companyRepository.findByIdAndStatusTrue(id).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
+    protected Company findCompanyById(String code){
+        return companyRepository.findByCodeAndStatusTrue(code).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
     }
 }

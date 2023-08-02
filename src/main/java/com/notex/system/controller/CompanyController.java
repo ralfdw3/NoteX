@@ -45,8 +45,8 @@ public class CompanyController {
     })
     @Operation(description = "Busca uma empresa no banco de dados pelo id.")
     @GetMapping(path = "/{id}")
-    public ResponseEntity getCompanyById(@PathVariable("id") String id){
-        return new ResponseEntity(companyService.getCompanyById(id), HttpStatus.OK);
+    public ResponseEntity getCompanyById(@PathVariable("id") String code){
+        return new ResponseEntity(companyService.getCompanyById(code), HttpStatus.OK);
     }
 
     @ApiResponses(value = {
@@ -65,8 +65,8 @@ public class CompanyController {
     })
     @Operation(description = "Habilita ou desabilita a empresa pelo status.")
     @PatchMapping
-    public ResponseEntity updateCompanyStatus(@RequestParam String id, @RequestParam Boolean status){
-        companyService.updateCompanyStatus(id, status);
+    public ResponseEntity updateCompanyStatus(@RequestParam String code, @RequestParam Boolean status){
+        companyService.updateCompanyStatus(code, status);
         return new ResponseEntity("Empresa desabilitada.", HttpStatus.OK);
     }
 

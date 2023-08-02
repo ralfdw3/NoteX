@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/v1/card")
 @RequiredArgsConstructor
+@CrossOrigin
 public class CardController {
 
     private final CardService cardService;
@@ -50,6 +51,16 @@ public class CardController {
     }
 
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sucesso ao buscar a lista de cards ativos."),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar a lista de cards ativos.")
+    })
+    @Operation(description = "Busca a lista de cards ativos")
+    @GetMapping(path = "/all/active")
+    public ResponseEntity getAllActiveCards(){
+        return new ResponseEntity(cardService.getAllActiveCards(), HttpStatus.OK);
+    }
+
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Deleta o card pelo id."),
             @ApiResponse(responseCode = "404", description = "Erro a encontrar o card que deve ser deletado.")
     })
@@ -58,4 +69,5 @@ public class CardController {
     public ResponseEntity deleteCardById(@PathVariable("id") String id) {
         return new ResponseEntity(cardService.deleteCardById(id), HttpStatus.OK);
     }
+
 }

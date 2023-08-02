@@ -8,15 +8,11 @@ import com.notex.system.models.Company;
 import java.util.List;
 
 public interface CompanyServiceInterface {
-    CompanyResponse createCompany(CompanyRequest request);
+    Company createCompany(CompanyRequest request);
     CompanyResponse updateCompany(Company company);
-
     CompanyResponse updateCompany(CompanyUpdateRequest request);
-
-    CompanyResponse getCompanyById(String id);
-
+    CompanyResponse getCompanyById(String code);
     List<Company> getCompaniesBySearchTerm(String searchTerm);
-
-    void updateCompanyStatus(String id, Boolean status);
+    void updateCompanyStatus(String code, Boolean status);
 
 }

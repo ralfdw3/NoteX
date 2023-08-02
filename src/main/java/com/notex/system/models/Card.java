@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,12 +24,15 @@ public class Card {
     LocalDateTime creation = LocalDateTime.now();
     LocalDate appearance;
     Company company;
+    @Field("status")
     Status status;
 
-    public Card(CardRequest request) {
+    public Card(CardRequest request, Company company) {
         this.title = request.getTitle();
         this.description = request.getDescription();
         this.appearance = request.getAppearance();
-        this.company = request.getCompany();
+        this.company = company;
+        this.status = request.getStatus();
     }
+
 }

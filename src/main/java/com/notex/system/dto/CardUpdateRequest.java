@@ -1,6 +1,5 @@
 package com.notex.system.dto;
 
-import com.notex.system.models.Company;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -17,5 +16,5 @@ public class CardUpdateRequest {
     String description;
     LocalDate appearance;
     @NotNull
-    Company company;
+    Long companyCode;
 }

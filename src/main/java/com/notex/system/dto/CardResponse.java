@@ -1,8 +1,10 @@
 package com.notex.system.dto;
 
+import com.notex.system.enums.Status;
 import com.notex.system.models.Card;
-import com.notex.system.models.Company;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +18,8 @@ public class CardResponse {
     String description;
     LocalDateTime creation;
     LocalDate appearance;
-    Company company;
+    CompanyResponse company;
+    Status status;
 
     public CardResponse(Card card) {
         this.id = card.getId();
@@ -24,6 +27,7 @@ public class CardResponse {
         this.description = card.getDescription();
         this.creation = card.getCreation();
         this.appearance = card.getAppearance();
-        this.company = card.getCompany();
+        this.company = new CompanyResponse(card.getCompany());
+        this.status = card.getStatus();
     }
 }

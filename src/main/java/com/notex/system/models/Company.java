@@ -9,7 +9,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Document(collection = "company")
 @Getter
@@ -27,6 +26,11 @@ public class Company {
     public Company(CompanyRequest request) {
         this.name = request.getName();
         this.code = request.getCode();
+    }
+
+    public Company(String name, String code) {
+        this.name = name;
+        this.code = code;
     }
 
     public void updateCompanyStatus(Boolean status) {
