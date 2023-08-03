@@ -1,5 +1,6 @@
 package com.notex.system.dto;
 
+import com.notex.system.enums.Status;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -11,10 +12,34 @@ import java.time.LocalDate;
 public class CardUpdateRequest {
     @NotBlank
     String id;
+
     @NotBlank
     String title;
+
     String description;
-    LocalDate appearance;
+
     @NotNull
-    Long companyCode;
+    LocalDate appearance;
+
+    @NotNull
+    String companyCode;
+
+    @NotBlank
+    String companyName;
+
+    @NotNull
+    Status status;
+
+    @Override
+    public String toString() {
+        return "CardUpdateRequest{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", appearance=" + appearance +
+                ", companyCode='" + companyCode + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

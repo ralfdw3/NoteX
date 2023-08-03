@@ -37,4 +37,14 @@ public class Company {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", creation=" + creation +
+                ", status=" + status +
+                '}';
+    }
 }

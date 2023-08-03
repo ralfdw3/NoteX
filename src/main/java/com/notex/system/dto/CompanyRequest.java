@@ -9,5 +9,7 @@ import lombok.Getter;
 public class CompanyRequest {
     @NotBlank
     String name;
+
+    @NotBlank
     String code;
 }

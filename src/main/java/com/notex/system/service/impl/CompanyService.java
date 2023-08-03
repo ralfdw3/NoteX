@@ -30,6 +30,13 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
+    public Company findOrCreateCompany(String companyCode, String companyName) {
+        return companyRepository
+                .findByCodeAndStatusTrue(companyCode)
+                .orElseGet(() -> createCompany(new CompanyRequest(companyName,companyCode)));
+    }
+
+    @Override
     @Transactional
     public CompanyResponse updateCompany(CompanyUpdateRequest request) {
         Company company = findCompanyById(request.getCode());

@@ -11,8 +11,11 @@ public class CompanyUpdateRequest {
 
     @NotBlank
     String id;
+
     @NotBlank
     String name;
+
+    @NotBlank
     String code;
 
     public CompanyUpdateRequest(Company company) {

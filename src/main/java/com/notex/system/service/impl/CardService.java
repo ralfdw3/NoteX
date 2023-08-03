@@ -22,16 +22,9 @@ public class CardService implements CardServiceInterface {
 
     @Override
     @Transactional
-    public CardResponse createCard(CardRequest cardRequest) {
-        Company company;
-
-        try {
-            company = companyService.findCompanyById(cardRequest.getCompanyCode());
-        } catch (NotFoundException e) {
-            CompanyRequest companyRequest = new CompanyRequest(cardRequest.getCompanyName(), cardRequest.getCompanyCode());
-            company = companyService.createCompany(companyRequest);
-        }
-        Card card = new Card(cardRequest, company);
+    public CardResponse createCard(CardRequest request) {
+        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName());
+        Card card = new Card(request, company);
 
         cardRepository.save(card);
 
@@ -42,7 +35,8 @@ public class CardService implements CardServiceInterface {
     @Transactional
     public CardResponse updateCard(CardUpdateRequest request) {
         Card card = findCardById(request.getId());
-
+        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName());
+        card.updateCard(request, company);
         cardRepository.save(card);
 
         return new CardResponse(card);

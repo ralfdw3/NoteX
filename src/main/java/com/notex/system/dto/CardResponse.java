@@ -30,4 +30,17 @@ public class CardResponse {
         this.company = new CompanyResponse(card.getCompany());
         this.status = card.getStatus();
     }
+
+    @Override
+    public String toString() {
+        return "CardResponse{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", creation=" + creation +
+                ", appearance=" + appearance +
+                ", company=" + company +
+                ", status=" + status +
+                '}';
+    }
 }
