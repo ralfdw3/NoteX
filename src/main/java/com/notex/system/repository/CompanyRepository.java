@@ -14,4 +14,6 @@ public interface CompanyRepository extends MongoRepository<Company, String> {
     Optional<Company> findByCodeAndStatusTrue(String code);
 
     Page<Company> findAllByStatusTrue(Pageable pageable);
+
+    Optional<Company> findByIdAndStatusTrue(String id);
 }
