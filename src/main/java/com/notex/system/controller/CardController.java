@@ -65,8 +65,8 @@ public class CardController {
             @ApiResponse(responseCode = "404", description = "Erro a encontrar o card que deve ser deletado.")
     })
     @Operation(description = "Deleta um card do banco de dados")
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity deleteCardById(@PathVariable("id") String id) {
+    @DeleteMapping
+    public ResponseEntity deleteCardById(@RequestParam String id) {
         return new ResponseEntity(cardService.deleteCardById(id), HttpStatus.OK);
     }
 

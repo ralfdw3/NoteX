@@ -70,7 +70,6 @@ public class CompanyServiceTest {
     public void Should_ReturnCompanyResponse_When_UpdatingACompanyWithCompanyObject () {
         CompanyResponse response = companyService.updateCompany(companyDefault);
 
-        assertEquals(companyUpdateRequest.getId(), response.getId());
         assertEquals(companyUpdateRequest.getName(), response.getName());
         assertEquals(companyUpdateRequest.getCode(), response.getCode());
     }

@@ -3,11 +3,14 @@ package com.notex.system.service.impl;
 import com.notex.system.dto.CompanyRequest;
 import com.notex.system.dto.CompanyResponse;
 import com.notex.system.dto.CompanyUpdateRequest;
+import com.notex.system.exceptions.BadRequestException;
 import com.notex.system.exceptions.NotFoundException;
 import com.notex.system.models.Company;
 import com.notex.system.repository.CompanyRepository;
 import com.notex.system.service.CompanyServiceInterface;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,22 +36,19 @@ public class CompanyService implements CompanyServiceInterface {
     public Company findOrCreateCompany(String companyCode, String companyName) {
         return companyRepository
                 .findByCodeAndStatusTrue(companyCode)
-                .orElseGet(() -> createCompany(new CompanyRequest(companyName,companyCode)));
+                .orElseGet(() -> {
+                    if (companyName == null || companyName.isEmpty()) {
+                        throw new BadRequestException("Coloque o nome da empresa para cadastrá-la, pois não existe nenhuma empresa com este código.");
+                    }
+                    return createCompany(new CompanyRequest(companyName, companyCode));
+                });
     }
 
     @Override
     @Transactional
     public CompanyResponse updateCompany(CompanyUpdateRequest request) {
         Company company = findCompanyById(request.getCode());
-
-        companyRepository.save(company);
-
-        return new CompanyResponse(company);
-    }
-
-    @Override
-    @Transactional
-    public CompanyResponse updateCompany(Company company) {
+        company.updateCompany(request);
         companyRepository.save(company);
 
         return new CompanyResponse(company);
@@ -59,6 +59,11 @@ public class CompanyService implements CompanyServiceInterface {
         Company company = findCompanyById(code);
 
         return new CompanyResponse(company);
+    }
+
+    @Override
+    public Page<Company> getAllActiveCompanies(Pageable pageable) {
+        return companyRepository.findAllByStatusTrue(pageable);
     }
 
     @Override
@@ -73,9 +78,11 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     @Transactional
-    public void updateCompanyStatus(String code, Boolean status) {
+    public CompanyResponse updateCompanyStatus(String code) {
         Company company = findCompanyById(code);
-        updateCompany(company);
+        company.updateCompanyStatus(false);
+        companyRepository.save(company);
+        return new CompanyResponse(company);
     }
 
     protected Company findCompanyById(String code){

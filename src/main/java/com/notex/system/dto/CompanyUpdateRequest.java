@@ -10,16 +10,12 @@ import lombok.Getter;
 public class CompanyUpdateRequest {
 
     @NotBlank
-    String id;
-
-    @NotBlank
     String name;
 
     @NotBlank
     String code;
 
     public CompanyUpdateRequest(Company company) {
-        this.id = company.getId();
         this.name = company.getName();
         this.code = company.getCode();
     }

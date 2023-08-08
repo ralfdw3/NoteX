@@ -22,7 +22,6 @@ public class CardRequest {
     @NotNull
     String companyCode;
 
-    @NotBlank
     String companyName;
 
     @NotNull

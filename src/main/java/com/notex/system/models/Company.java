@@ -1,6 +1,7 @@
 package com.notex.system.models;
 
 import com.notex.system.dto.CompanyRequest;
+import com.notex.system.dto.CompanyUpdateRequest;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,14 +38,8 @@ public class Company {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", code='" + code + '\'' +
-                ", creation=" + creation +
-                ", status=" + status +
-                '}';
+    public void updateCompany(CompanyUpdateRequest request) {
+        this.name = request.getName();
+        this.code = request.getCode();
     }
 }
