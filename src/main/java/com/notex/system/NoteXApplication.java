@@ -1,4 +1,4 @@
-package com.notex.notes;
+package com.notex.system;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
