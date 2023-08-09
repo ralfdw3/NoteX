@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CompanyRepository extends MongoRepository<Company, String> {
-    List<Company> findByNameContaining(String searchTerm);
+    Page<Company> findByNameContainingIgnoreCase(Pageable pageable, String searchTerm);
 
     Optional<Company> findByCodeAndStatusTrue(String code);
 

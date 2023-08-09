@@ -15,6 +15,6 @@ public interface CompanyServiceInterface {
     CompanyResponse updateCompany(CompanyUpdateRequest request);
     CompanyResponse getCompanyById(String code);
     Page<Company> getAllActiveCompanies(Pageable pageable);
-    List<Company> getCompaniesBySearchTerm(String searchTerm);
+    Page<Company> getCompaniesBySearchTerm(Pageable pageable, String searchTerm);
     CompanyResponse updateCompanyStatus(String code);
 }

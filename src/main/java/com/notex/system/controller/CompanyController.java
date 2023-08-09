@@ -69,8 +69,8 @@ public class CompanyController {
     })
     @Operation(description = "Busca uma lista de empresas no banco de dados por uma substring.")
     @GetMapping
-    public ResponseEntity getCompanyBySearchTerm(@RequestParam String searchTerm){
-        return new ResponseEntity(companyService.getCompaniesBySearchTerm(searchTerm), HttpStatus.OK);
+    public ResponseEntity getCompanyBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm ){
+        return new ResponseEntity(companyService.getCompaniesBySearchTerm(pageable, searchTerm), HttpStatus.OK);
     }
 
     @ApiResponses(value = {

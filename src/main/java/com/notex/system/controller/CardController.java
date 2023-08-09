@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +60,16 @@ public class CardController {
     @GetMapping(path = "/all/active")
     public ResponseEntity getAllActiveCards(){
         return new ResponseEntity(cardService.getAllActiveCards(), HttpStatus.OK);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sucesso ao buscar todos os cards de uma empresa."),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar todos os cards de uma empresa.")
+    })
+    @Operation(description = "Busca todos os cards de uma empresa.")
+    @GetMapping(path = "/all/")
+    public ResponseEntity getAllCardsByCompany(@PageableDefault(size = 10) Pageable pageable, @RequestParam String companyId){
+        return new ResponseEntity(cardService.getAllCardsByCompany(pageable, companyId), HttpStatus.OK);
     }
 
     @ApiResponses(value = {

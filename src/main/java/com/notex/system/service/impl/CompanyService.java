@@ -67,13 +67,8 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
-    public List<Company> getCompaniesBySearchTerm(String searchTerm) {
-        List<Company> companies = companyRepository.findByNameContaining(searchTerm);
-        if (companies.isEmpty()){
-            throw new NotFoundException("Nenhuma empresa foi encontrada.");
-        }
-
-        return companies;
+    public Page<Company> getCompaniesBySearchTerm(Pageable pageable, String searchTerm) {
+        return companyRepository.findByNameContainingIgnoreCase(pageable, searchTerm);
     }
 
     @Override

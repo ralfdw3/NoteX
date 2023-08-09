@@ -8,6 +8,8 @@ import com.notex.system.models.Company;
 import com.notex.system.repository.CardRepository;
 import com.notex.system.service.CardServiceInterface;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +62,11 @@ public class CardService implements CardServiceInterface {
     @Override
     public List<Card> getAllActiveCards() {
         return cardRepository.findAllByStatusOrStatus(Status.ABERTO, Status.EM_NEGOCIACAO);
+    }
+
+    @Override
+    public Page<Card> getAllCardsByCompany(Pageable pageable, String companyId) {
+        return cardRepository.findAllByCompanyId(pageable, companyId);
     }
 
     private Card findCardById(String id){
