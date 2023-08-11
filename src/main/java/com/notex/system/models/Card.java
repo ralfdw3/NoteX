@@ -22,8 +22,6 @@ public class Card {
     @Id
     String id;
 
-    String title;
-
     String description;
 
     LocalDateTime creation = LocalDateTime.now();
@@ -37,7 +35,6 @@ public class Card {
     Status status;
 
     public Card(CardRequest request, Company company) {
-        this.title = request.getTitle();
         this.description = request.getDescription();
         this.appearance = request.getAppearance();
         this.company = company;
@@ -45,7 +42,6 @@ public class Card {
     }
 
     public void updateCard(CardUpdateRequest request, Company company) {
-        this.title = request.getTitle();
         this.description = request.getDescription();
         this.appearance = request.getAppearance();
         this.company = company;

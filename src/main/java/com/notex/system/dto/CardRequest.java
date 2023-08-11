@@ -11,9 +11,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class CardRequest {
-    @NotBlank
-    String title;
-
     String description;
 
     @NotNull

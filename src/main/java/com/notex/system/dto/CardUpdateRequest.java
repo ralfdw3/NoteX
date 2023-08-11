@@ -13,9 +13,6 @@ public class CardUpdateRequest {
     @NotBlank
     String id;
 
-    @NotBlank
-    String title;
-
     String description;
 
     @NotNull
@@ -30,16 +27,4 @@ public class CardUpdateRequest {
     @NotNull
     Status status;
 
-    @Override
-    public String toString() {
-        return "CardUpdateRequest{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", appearance=" + appearance +
-                ", companyCode='" + companyCode + '\'' +
-                ", companyName='" + companyName + '\'' +
-                ", status=" + status +
-                '}';
-    }
 }
