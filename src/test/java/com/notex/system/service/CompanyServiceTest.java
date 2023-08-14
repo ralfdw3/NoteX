@@ -38,7 +38,7 @@ public class CompanyServiceTest {
         openMocks(this);
 
         when(companyRepository.save(companyDefault)).thenReturn(companyDefault);
-        when(companyRepository.findByIdAndStatusTrue(companyDefault.getId())).thenReturn(Optional.ofNullable(companyDefault));
+        when(companyRepository.findByIdAndStatus(companyDefault.getId())).thenReturn(Optional.ofNullable(companyDefault));
         when(companyRepository.findByNameContainingIgnoreCase("validSearchTerm")).thenReturn(List.of(companyDefault));
     }
 
@@ -110,7 +110,7 @@ public class CompanyServiceTest {
     public void Should_ReturnNothing_When_UpdatingCompanyStatus() {
         companyService.updateCompanyStatus(companyDefault.getId(), false);
 
-        verify(companyRepository).findByIdAndStatusTrue(companyDefault.getId());
+        verify(companyRepository).findByIdAndStatus(companyDefault.getId());
         verify(companyRepository).save(companyDefault);
     }
 

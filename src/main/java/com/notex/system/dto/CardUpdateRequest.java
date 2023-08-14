@@ -1,6 +1,6 @@
 package com.notex.system.dto;
 
-import com.notex.system.enums.Status;
+import com.notex.system.enums.CardStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,6 +25,6 @@ public class CardUpdateRequest {
     String companyName;
 
     @NotNull
-    Status status;
+    CardStatus status;
 
 }

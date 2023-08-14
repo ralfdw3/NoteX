@@ -3,6 +3,7 @@ package com.notex.system.service.impl;
 import com.notex.system.dto.CompanyRequest;
 import com.notex.system.dto.CompanyResponse;
 import com.notex.system.dto.CompanyUpdateRequest;
+import com.notex.system.enums.CompanyStatus;
 import com.notex.system.exceptions.BadRequestException;
 import com.notex.system.exceptions.NotFoundException;
 import com.notex.system.models.Company;
@@ -13,8 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +34,7 @@ public class CompanyService implements CompanyServiceInterface {
     @Override
     public Company findOrCreateCompany(String companyCode, String companyName) {
         return companyRepository
-                .findByCodeAndStatusTrue(companyCode)
+                .findByCode(companyCode)
                 .orElseGet(() -> {
                     if (companyName == null || companyName.isEmpty()) {
                         throw new BadRequestException("Coloque o nome da empresa para cadastrá-la, pois não existe nenhuma empresa com este código.");
@@ -47,7 +46,7 @@ public class CompanyService implements CompanyServiceInterface {
     @Override
     @Transactional
     public CompanyResponse updateCompany(CompanyUpdateRequest request) {
-        Company company = findCompanyById(request.getId());
+        Company company = findActiveCompanyById(request.getId());
         company.updateCompany(request);
         companyRepository.save(company);
 
@@ -63,7 +62,7 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public Page<Company> getAllActiveCompanies(Pageable pageable) {
-        return companyRepository.findAllByStatusTrue(pageable);
+        return companyRepository.findAllByStatus(pageable, CompanyStatus.ACTIVE);
     }
 
     @Override
@@ -72,19 +71,24 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
+    public Page<Company> getOverdueCompaniesBySearchTermAndStatus(Pageable pageable, String searchTerm) {
+        return companyRepository.findByNameContainingIgnoreCaseAndStatus(pageable, searchTerm, CompanyStatus.OVERDUE);
+    }
+
+    @Override
     @Transactional
-    public CompanyResponse updateCompanyStatus(String code) {
+    public CompanyResponse updateCompanyStatus(String code, CompanyStatus status) {
         Company company = findCompanyByCode(code);
-        company.updateCompanyStatus(false);
+        company.updateCompanyStatus(status);
         companyRepository.save(company);
         return new CompanyResponse(company);
     }
 
     protected Company findCompanyByCode(String code){
-        return companyRepository.findByCodeAndStatusTrue(code).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
+        return companyRepository.findByCode(code).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
     }
 
-    private Company findCompanyById(String id){
-        return companyRepository.findByIdAndStatusTrue(id).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
+    private Company findActiveCompanyById(String id){
+        return companyRepository.findByIdAndStatus(id, CompanyStatus.ACTIVE).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
     }
 }

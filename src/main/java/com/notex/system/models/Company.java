@@ -2,6 +2,7 @@ package com.notex.system.models;
 
 import com.notex.system.dto.CompanyRequest;
 import com.notex.system.dto.CompanyUpdateRequest;
+import com.notex.system.enums.CompanyStatus;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class Company {
     String name;
     String code;
     LocalDateTime creation = LocalDateTime.now();
-    Boolean status = true;
+    CompanyStatus status = CompanyStatus.ACTIVE;
 
     public Company(CompanyRequest request) {
         this.name = request.getName();
@@ -34,7 +35,7 @@ public class Company {
         this.code = code;
     }
 
-    public void updateCompanyStatus(Boolean status) {
+    public void updateCompanyStatus(CompanyStatus status) {
         this.status = status;
     }
 

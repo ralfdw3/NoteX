@@ -2,7 +2,7 @@ package com.notex.system.models;
 
 import com.notex.system.dto.CardRequest;
 import com.notex.system.dto.CardUpdateRequest;
-import com.notex.system.enums.Status;
+import com.notex.system.enums.CardStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +32,7 @@ public class Card {
     Company company;
 
     @Field("status")
-    Status status;
+    CardStatus status;
 
     public Card(CardRequest request, Company company) {
         this.description = request.getDescription();

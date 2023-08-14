@@ -1,11 +1,11 @@
 package com.notex.system.enums;
 
-public enum Status {
-    ABERTO("1"), EM_NEGOCIACAO("2"), CONCLUIDO("3");
+public enum CompanyStatus {
+    ACTIVE("1"), INACTIVE("2"), OVERDUE("3");
 
     private final String id;
 
-    private Status(String id) {
+    private CompanyStatus(String id) {
         this.id = id;
     }
 

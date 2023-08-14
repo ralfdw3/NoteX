@@ -1,7 +1,7 @@
 package com.notex.system.service.impl;
 
 import com.notex.system.dto.*;
-import com.notex.system.enums.Status;
+import com.notex.system.enums.CardStatus;
 import com.notex.system.exceptions.NotFoundException;
 import com.notex.system.models.Card;
 import com.notex.system.models.Company;
@@ -62,7 +62,7 @@ public class CardService implements CardServiceInterface {
 
     @Override
     public List<Card> getAllActiveCards() {
-        return cardRepository.findAllByStatusOrStatus(Status.ABERTO, Status.EM_NEGOCIACAO, Sort.by("appearance").ascending());
+        return cardRepository.findAllByStatusOrStatus(CardStatus.ABERTO, CardStatus.EM_NEGOCIACAO, Sort.by("appearance").ascending());
     }
 
     @Override
