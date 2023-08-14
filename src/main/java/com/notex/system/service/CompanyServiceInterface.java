@@ -18,4 +18,5 @@ public interface CompanyServiceInterface {
     Page<Company> getCompaniesBySearchTerm(Pageable pageable, String searchTerm);
     CompanyResponse updateCompanyStatus(String code, CompanyStatus status);
     Page<Company> getOverdueCompaniesBySearchTermAndStatus(Pageable pageable, String searchTerm);
+    Page<Company> getAllOverdueCompanies(Pageable pageable);
 }

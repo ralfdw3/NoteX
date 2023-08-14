@@ -1,7 +1,7 @@
 package com.notex.system.enums;
 
 public enum CardStatus {
-    ABERTO("1"), EM_NEGOCIACAO("2"), CONCLUIDO("3");
+    ABERTO("ABERTO"), EM_NEGOCIACAO("EM_NEGOCIACAO"), CONCLUIDO("CONCLUIDO");
 
     private final String id;
 

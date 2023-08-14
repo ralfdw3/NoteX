@@ -76,6 +76,11 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
+    public Page<Company> getAllOverdueCompanies(Pageable pageable) {
+        return companyRepository.findAllByStatus(pageable, CompanyStatus.OVERDUE);
+    }
+
+    @Override
     @Transactional
     public CompanyResponse updateCompanyStatus(String code, CompanyStatus status) {
         Company company = findCompanyByCode(code);

@@ -59,8 +59,18 @@ public class CompanyController {
     })
     @Operation(description = "Busca a lista de empresas ativas.")
     @GetMapping(path = "/all/active")
-    public ResponseEntity getAllActiveCards(@PageableDefault(size = 10) Pageable pageable){
+    public ResponseEntity getAllActiveCompanies(@PageableDefault(size = 10) Pageable pageable){
         return new ResponseEntity(companyService.getAllActiveCompanies(pageable), HttpStatus.OK);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sucesso ao buscar a lista de empresas inadimplentes."),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar a lista de empresas inadimplentes.")
+    })
+    @Operation(description = "Busca a lista de empresas inadimplentes.")
+    @GetMapping(path = "/all/overdue")
+    public ResponseEntity getAllOverdueCompanies(@PageableDefault(size = 10) Pageable pageable){
+        return new ResponseEntity(companyService.getAllOverdueCompanies(pageable), HttpStatus.OK);
     }
 
     @ApiResponses(value = {
