@@ -24,15 +24,21 @@ public class Company {
     String code;
     LocalDateTime creation = LocalDateTime.now();
     CompanyStatus status = CompanyStatus.ATIVO;
+    String phone;
+    String email;
 
     public Company(CompanyRequest request) {
         this.name = request.getName();
         this.code = request.getCode();
+        this.phone = request.getCompanyPhone();
+        this.email = request.getCompanyEmail();
     }
 
-    public Company(String name, String code) {
+    public Company(String name, String code, String phone, String email) {
         this.name = name;
         this.code = code;
+        this.phone = phone;
+        this.email = email;
     }
 
     public void updateCompanyStatus(CompanyStatus status) {
@@ -43,5 +49,7 @@ public class Company {
         this.name = request.getName();
         this.code = request.getCode();
         this.status = request.getStatus();
+        this.email = request.getCompanyEmail();
+        this.phone = request.getCompanyPhone();
     }
 }

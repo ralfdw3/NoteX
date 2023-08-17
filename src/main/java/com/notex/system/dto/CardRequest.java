@@ -20,6 +20,10 @@ public class CardRequest {
 
     String companyName;
 
+    String companyPhone;
+
+    String companyEmail;
+
     @NotNull
     CardStatus status;
 

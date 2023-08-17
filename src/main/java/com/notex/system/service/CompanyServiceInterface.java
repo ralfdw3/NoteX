@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface CompanyServiceInterface {
     Company createCompany(CompanyRequest request);
-    Company findOrCreateCompany(String companyCode, String companyName);
+    Company findOrCreateCompany(String companyCode, String companyName, String companyPhone, String companyEmail);
     CompanyResponse updateCompany(CompanyUpdateRequest request);
     CompanyResponse getCompanyById(String code);
     Page<Company> getAllActiveCompanies(Pageable pageable);

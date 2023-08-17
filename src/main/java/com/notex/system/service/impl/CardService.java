@@ -26,7 +26,8 @@ public class CardService implements CardServiceInterface {
     @Override
     @Transactional
     public CardResponse createCard(CardRequest request) {
-        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName());
+        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName(),
+                request.getCompanyPhone(), request.getCompanyEmail());
         Card card = new Card(request, company);
 
         cardRepository.save(card);
@@ -38,7 +39,8 @@ public class CardService implements CardServiceInterface {
     @Transactional
     public CardResponse updateCard(CardUpdateRequest request) {
         Card card = findCardById(request.getId());
-        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName());
+        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName(),
+                request.getCompanyPhone(), request.getCompanyEmail());
         card.updateCard(request, company);
         cardRepository.save(card);
 

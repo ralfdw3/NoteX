@@ -24,6 +24,10 @@ public class CardUpdateRequest {
     @NotBlank
     String companyName;
 
+    String companyPhone;
+
+    String companyEmail;
+
     @NotNull
     CardStatus status;
 

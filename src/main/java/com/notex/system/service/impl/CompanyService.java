@@ -32,14 +32,17 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
-    public Company findOrCreateCompany(String companyCode, String companyName) {
+    public Company findOrCreateCompany(String companyCode, String companyName, String companyPhone, String companyEmail) {
         return companyRepository
                 .findByCode(companyCode)
                 .orElseGet(() -> {
                     if (companyName == null || companyName.isEmpty()) {
                         throw new BadRequestException("Coloque o nome da empresa para cadastrá-la, pois não existe nenhuma empresa com este código.");
                     }
-                    return createCompany(new CompanyRequest(companyName, companyCode));
+                    if (companyEmail == null && companyPhone == null){
+                        throw new BadRequestException("Pelo menos um e-mail ou telefone precisa ser adicionado");
+                    }
+                    return createCompany(new CompanyRequest(companyName, companyCode, companyPhone, companyEmail));
                 });
     }
 
@@ -91,9 +94,5 @@ public class CompanyService implements CompanyServiceInterface {
 
     protected Company findCompanyByCode(String code){
         return companyRepository.findByCode(code).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
-    }
-
-    private Company findActiveCompanyById(String id){
-        return companyRepository.findByIdAndStatus(id, CompanyStatus.ATIVO).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
     }
 }

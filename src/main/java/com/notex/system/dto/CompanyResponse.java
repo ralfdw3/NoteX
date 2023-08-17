@@ -12,6 +12,8 @@ public class CompanyResponse {
     String name;
     String code;
     CompanyStatus status;
+    String companyPhone;
+    String companyEmail;
 
     public CompanyResponse(Company company) {
         this.id = company.getId();
