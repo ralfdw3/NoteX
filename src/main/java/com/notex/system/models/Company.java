@@ -23,7 +23,7 @@ public class Company {
     String name;
     String code;
     LocalDateTime creation = LocalDateTime.now();
-    CompanyStatus status = CompanyStatus.ACTIVE;
+    CompanyStatus status = CompanyStatus.ATIVO;
 
     public Company(CompanyRequest request) {
         this.name = request.getName();
@@ -42,5 +42,6 @@ public class Company {
     public void updateCompany(CompanyUpdateRequest request) {
         this.name = request.getName();
         this.code = request.getCode();
+        this.status = request.getStatus();
     }
 }

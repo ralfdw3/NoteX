@@ -99,8 +99,8 @@ public class CompanyController {
     })
     @Operation(description = "Habilita ou desabilita a empresa pelo status.")
     @DeleteMapping
-    public ResponseEntity updateCompanyStatus(@RequestParam String code, @RequestParam CompanyStatus status){
-        return new ResponseEntity(companyService.updateCompanyStatus(code, status), HttpStatus.OK);
+    public ResponseEntity disableCompany(@RequestParam String code){
+        return new ResponseEntity(companyService.disableCompany(code), HttpStatus.OK);
     }
 
 }

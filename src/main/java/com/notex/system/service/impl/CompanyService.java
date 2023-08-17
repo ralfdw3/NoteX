@@ -46,7 +46,7 @@ public class CompanyService implements CompanyServiceInterface {
     @Override
     @Transactional
     public CompanyResponse updateCompany(CompanyUpdateRequest request) {
-        Company company = findActiveCompanyById(request.getId());
+        Company company = companyRepository.findById(request.getId()).get();
         company.updateCompany(request);
         companyRepository.save(company);
 
@@ -62,7 +62,7 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public Page<Company> getAllActiveCompanies(Pageable pageable) {
-        return companyRepository.findAllByStatus(pageable, CompanyStatus.ACTIVE);
+        return companyRepository.findAllByStatus(pageable, CompanyStatus.ATIVO);
     }
 
     @Override
@@ -72,19 +72,19 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public Page<Company> getOverdueCompaniesBySearchTermAndStatus(Pageable pageable, String searchTerm) {
-        return companyRepository.findByNameContainingIgnoreCaseAndStatus(pageable, searchTerm, CompanyStatus.OVERDUE);
+        return companyRepository.findByNameContainingIgnoreCaseAndStatus(pageable, searchTerm, CompanyStatus.INADIMPLENTE);
     }
 
     @Override
     public Page<Company> getAllOverdueCompanies(Pageable pageable) {
-        return companyRepository.findAllByStatus(pageable, CompanyStatus.OVERDUE);
+        return companyRepository.findAllByStatus(pageable, CompanyStatus.INADIMPLENTE);
     }
 
     @Override
     @Transactional
-    public CompanyResponse updateCompanyStatus(String code, CompanyStatus status) {
+    public CompanyResponse disableCompany(String code) {
         Company company = findCompanyByCode(code);
-        company.updateCompanyStatus(status);
+        company.updateCompanyStatus(CompanyStatus.INATIVO);
         companyRepository.save(company);
         return new CompanyResponse(company);
     }
@@ -94,6 +94,6 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     private Company findActiveCompanyById(String id){
-        return companyRepository.findByIdAndStatus(id, CompanyStatus.ACTIVE).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
+        return companyRepository.findByIdAndStatus(id, CompanyStatus.ATIVO).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
     }
 }

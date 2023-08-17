@@ -1,7 +1,7 @@
 package com.notex.system.enums;
 
 public enum CompanyStatus {
-    ACTIVE("ACTIVE"), INACTIVE("INACTIVE"), OVERDUE("OVERDUE");
+    ATIVO("ATIVO"), INATIVO("INATIVO"), INADIMPLENTE("INADIMPLENTE");
 
     private final String id;
 
