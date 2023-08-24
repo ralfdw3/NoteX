@@ -22,8 +22,8 @@ public class CompanyUpdateRequest {
     @NotNull
     CompanyStatus status;
 
-    String companyPhone;
+    String phone;
 
-    String companyEmail;
+    String email;
 
 }

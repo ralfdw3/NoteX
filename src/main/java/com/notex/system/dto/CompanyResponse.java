@@ -12,13 +12,15 @@ public class CompanyResponse {
     String name;
     String code;
     CompanyStatus status;
-    String companyPhone;
-    String companyEmail;
+    String phone;
+    String email;
 
     public CompanyResponse(Company company) {
         this.id = company.getId();
         this.name = company.getName();
         this.code = company.getCode();
         this.status = company.getStatus();
+        this.phone = company.getPhone();
+        this.email = company.getEmail();
     }
 }

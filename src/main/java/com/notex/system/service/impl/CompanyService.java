@@ -39,7 +39,7 @@ public class CompanyService implements CompanyServiceInterface {
                     if (companyName == null || companyName.isEmpty()) {
                         throw new BadRequestException("Coloque o nome da empresa para cadastrá-la, pois não existe nenhuma empresa com este código.");
                     }
-                    if (companyEmail == null && companyPhone == null){
+                    if (companyEmail.isEmpty() && companyPhone.isEmpty()){
                         throw new BadRequestException("Pelo menos um e-mail ou telefone precisa ser adicionado");
                     }
                     return createCompany(new CompanyRequest(companyName, companyCode, companyPhone, companyEmail));
