@@ -12,4 +12,8 @@ public class CompanyRequest {
 
     @NotBlank
     String code;
+
+    String companyPhone;
+
+    String companyEmail;
 }

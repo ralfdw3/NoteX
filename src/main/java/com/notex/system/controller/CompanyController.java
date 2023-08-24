@@ -2,6 +2,7 @@ package com.notex.system.controller;
 
 import com.notex.system.dto.CompanyRequest;
 import com.notex.system.dto.CompanyUpdateRequest;
+import com.notex.system.enums.CompanyStatus;
 import com.notex.system.service.impl.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,8 +59,18 @@ public class CompanyController {
     })
     @Operation(description = "Busca a lista de empresas ativas.")
     @GetMapping(path = "/all/active")
-    public ResponseEntity getAllActiveCards(@PageableDefault(size = 10) Pageable pageable){
+    public ResponseEntity getAllActiveCompanies(@PageableDefault(size = 10) Pageable pageable){
         return new ResponseEntity(companyService.getAllActiveCompanies(pageable), HttpStatus.OK);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sucesso ao buscar a lista de empresas inadimplentes."),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar a lista de empresas inadimplentes.")
+    })
+    @Operation(description = "Busca a lista de empresas inadimplentes.")
+    @GetMapping(path = "/all/overdue")
+    public ResponseEntity getAllOverdueCompanies(@PageableDefault(size = 10) Pageable pageable){
+        return new ResponseEntity(companyService.getAllOverdueCompanies(pageable), HttpStatus.OK);
     }
 
     @ApiResponses(value = {
@@ -68,9 +78,19 @@ public class CompanyController {
             @ApiResponse(responseCode = "404", description = "Erro ao buscar a lista de empresas por uma substring.")
     })
     @Operation(description = "Busca uma lista de empresas no banco de dados por uma substring.")
-    @GetMapping
-    public ResponseEntity getCompanyBySearchTerm(@RequestParam String searchTerm){
-        return new ResponseEntity(companyService.getCompaniesBySearchTerm(searchTerm), HttpStatus.OK);
+    @GetMapping(path = "/actives")
+    public ResponseEntity getCompanyBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm ){
+        return new ResponseEntity(companyService.getCompaniesBySearchTerm(pageable, searchTerm), HttpStatus.OK);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sucesso ao buscar uma lista de empresas inadimplentes por uma substring."),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar a lista de empresas inadimplentes por uma substring.")
+    })
+    @Operation(description = "Busca uma lista de empresas inadimplentes no banco de dados por uma substring.")
+    @GetMapping(path = "/overdues")
+    public ResponseEntity getOverdueCompanyBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm ){
+        return new ResponseEntity(companyService.getOverdueCompaniesBySearchTermAndStatus(pageable, searchTerm), HttpStatus.OK);
     }
 
     @ApiResponses(value = {
@@ -79,8 +99,8 @@ public class CompanyController {
     })
     @Operation(description = "Habilita ou desabilita a empresa pelo status.")
     @DeleteMapping
-    public ResponseEntity updateCompanyStatus(@RequestParam String code){
-        return new ResponseEntity(companyService.updateCompanyStatus(code), HttpStatus.OK);
+    public ResponseEntity disableCompany(@RequestParam String code){
+        return new ResponseEntity(companyService.disableCompany(code), HttpStatus.OK);
     }
 
 }

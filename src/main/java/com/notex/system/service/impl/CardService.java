@@ -1,13 +1,16 @@
 package com.notex.system.service.impl;
 
 import com.notex.system.dto.*;
-import com.notex.system.enums.Status;
+import com.notex.system.enums.CardStatus;
 import com.notex.system.exceptions.NotFoundException;
 import com.notex.system.models.Card;
 import com.notex.system.models.Company;
 import com.notex.system.repository.CardRepository;
 import com.notex.system.service.CardServiceInterface;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +26,8 @@ public class CardService implements CardServiceInterface {
     @Override
     @Transactional
     public CardResponse createCard(CardRequest request) {
-        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName());
+        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName(),
+                request.getCompanyPhone(), request.getCompanyEmail());
         Card card = new Card(request, company);
 
         cardRepository.save(card);
@@ -35,7 +39,8 @@ public class CardService implements CardServiceInterface {
     @Transactional
     public CardResponse updateCard(CardUpdateRequest request) {
         Card card = findCardById(request.getId());
-        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName());
+        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName(),
+                request.getCompanyPhone(), request.getCompanyEmail());
         card.updateCard(request, company);
         cardRepository.save(card);
 
@@ -59,7 +64,12 @@ public class CardService implements CardServiceInterface {
 
     @Override
     public List<Card> getAllActiveCards() {
-        return cardRepository.findAllByStatusOrStatus(Status.ABERTO, Status.EM_NEGOCIACAO);
+        return cardRepository.findAllByStatusOrStatus(CardStatus.ABERTO, CardStatus.EM_NEGOCIACAO, Sort.by("appearance").ascending());
+    }
+
+    @Override
+    public Page<Card> getAllCardsByCompany(Pageable pageable, String companyId) {
+        return cardRepository.findAllByCompanyId(pageable, companyId);
     }
 
     private Card findCardById(String id){

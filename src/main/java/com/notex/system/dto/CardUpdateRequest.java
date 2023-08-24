@@ -1,6 +1,6 @@
 package com.notex.system.dto;
 
-import com.notex.system.enums.Status;
+import com.notex.system.enums.CardStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -13,9 +13,6 @@ public class CardUpdateRequest {
     @NotBlank
     String id;
 
-    @NotBlank
-    String title;
-
     String description;
 
     @NotNull
@@ -27,19 +24,11 @@ public class CardUpdateRequest {
     @NotBlank
     String companyName;
 
-    @NotNull
-    Status status;
+    String companyPhone;
 
-    @Override
-    public String toString() {
-        return "CardUpdateRequest{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", appearance=" + appearance +
-                ", companyCode='" + companyCode + '\'' +
-                ", companyName='" + companyName + '\'' +
-                ", status=" + status +
-                '}';
-    }
+    String companyEmail;
+
+    @NotNull
+    CardStatus status;
+
 }
