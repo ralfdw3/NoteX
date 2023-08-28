@@ -1,7 +1,6 @@
-package com.notex.system.dto;
+package com.notex.system.models.Company;
 
 import com.notex.system.enums.CompanyStatus;
-import com.notex.system.models.Company;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,10 +9,10 @@ import lombok.Getter;
 public class CompanyResponse {
     String id;
     String name;
-    String code;
-    CompanyStatus status;
+    Long code;
     String phone;
     String email;
+    CompanyStatus status;
 
     public CompanyResponse(Company company) {
         this.id = company.getId();

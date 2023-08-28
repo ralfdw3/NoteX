@@ -1,10 +1,9 @@
 package com.notex.system.stubs;
 
-import com.notex.system.dto.CardRequest;
-import com.notex.system.dto.CardResponse;
-import com.notex.system.dto.CardUpdateRequest;
+import com.notex.system.models.Card.CardRequest;
+import com.notex.system.models.Card.CardResponse;
 import com.notex.system.enums.CardStatus;
-import com.notex.system.models.Card;
+import com.notex.system.models.Card.Card;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

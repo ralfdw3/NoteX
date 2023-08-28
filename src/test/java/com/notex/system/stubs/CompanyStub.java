@@ -1,9 +1,7 @@
 package com.notex.system.stubs;
 
-import com.notex.system.dto.CompanyRequest;
-import com.notex.system.dto.CompanyUpdateRequest;
-import com.notex.system.models.Company;
-import jakarta.validation.constraints.NotBlank;
+import com.notex.system.models.Company.CompanyRequest;
+import com.notex.system.models.Company.Company;
 
 import java.time.LocalDateTime;
 

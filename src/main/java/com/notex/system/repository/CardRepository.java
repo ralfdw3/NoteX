@@ -1,7 +1,7 @@
 package com.notex.system.repository;
 
 import com.notex.system.enums.CardStatus;
-import com.notex.system.models.Card;
+import com.notex.system.models.Card.Card;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

@@ -1,5 +1,8 @@
 package com.notex.system.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum CompanyStatus {
     ATIVO("ATIVO"), INATIVO("INATIVO"), INADIMPLENTE("INADIMPLENTE");
 
@@ -9,7 +12,4 @@ public enum CompanyStatus {
         this.id = id;
     }
 
-    public String getId() {
-        return id;
-    }
 }
