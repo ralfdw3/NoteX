@@ -12,6 +12,6 @@ public interface CompanyRepository extends MongoRepository<Company, String> {
     Page<Company> findByNameContainingIgnoreCase(Pageable pageable, String searchTerm);
     Page<Company> findByNameContainingIgnoreCaseAndStatus(Pageable pageable, String searchTerm, CompanyStatus status);
     Optional<Company> findByCode(Long code);
-    Page<Company> findAllByStatus(Pageable pageable, CompanyStatus status);
+    Page<Company> findAllByStatusOrderByCode(Pageable pageable, CompanyStatus status);
     Optional<Company> findByIdAndStatus(String id, CompanyStatus status);
 }

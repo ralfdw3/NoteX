@@ -88,7 +88,7 @@ public class CompanyService {
     }
 
     public Page<Company> getAllActiveCompanies(Pageable pageable) {
-        return companyRepository.findAllByStatus(pageable, CompanyStatus.ATIVO);
+        return companyRepository.findAllByStatusOrderByCode(pageable, CompanyStatus.ATIVO);
     }
 
     public Page<Company> getCompaniesBySearchTerm(Pageable pageable, String searchTerm) {
@@ -100,7 +100,7 @@ public class CompanyService {
     }
 
     public Page<Company> getAllOverdueCompanies(Pageable pageable) {
-        return companyRepository.findAllByStatus(pageable, CompanyStatus.INADIMPLENTE);
+        return companyRepository.findAllByStatusOrderByCode(pageable, CompanyStatus.INADIMPLENTE);
     }
 
     private Company findCompanyByCode(Long code){
