@@ -1,5 +1,6 @@
 package com.notex.system.models.Company;
 
+import com.notex.system.enums.CompanyStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,4 +16,5 @@ public class CompanyRequest {
     Long code;
     String phone;
     String email;
+    CompanyStatus status;
 }

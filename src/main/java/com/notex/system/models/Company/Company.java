@@ -34,6 +34,7 @@ public class Company {
         this.code = request.getCode();
         this.email = request.getEmail();
         this.phone = request.getPhone();
+        this.status = request.getStatus();
     }
 
     public Company(CompanyRequest request) {
