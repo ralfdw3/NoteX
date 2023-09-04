@@ -6,6 +6,7 @@ import com.notex.system.models.Card.Card;
 import com.notex.system.models.Card.CardRequest;
 import com.notex.system.models.Card.CardResponse;
 import com.notex.system.models.Company.Company;
+import com.notex.system.models.Company.CompanyResponse;
 import com.notex.system.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,8 +37,8 @@ public class CardService{
     @Transactional
     public CardResponse updateCard(CardRequest request) {
         Card card = findCardById(request.getId());
-        Company company = companyService.findAndUpdateOrCreateNewCompany(request.getCompanyRequest());
-        card.updateCard(request, company);
+        companyService.updateCompany(request.getCompanyRequest());
+        card.updateCard(request);
 
         cardRepository.save(card);
 

@@ -77,7 +77,7 @@ public class CompanyController {
     })
     @Operation(description = "Busca uma lista de empresas no banco de dados por uma substring.")
     @GetMapping(path = "/actives")
-    public ResponseEntity getCompanyBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm ){
+    public ResponseEntity getCompaniesBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm){
         return new ResponseEntity(companyService.getCompaniesBySearchTerm(pageable, searchTerm), HttpStatus.OK);
     }
 
@@ -87,7 +87,7 @@ public class CompanyController {
     })
     @Operation(description = "Busca uma lista de empresas inadimplentes no banco de dados por uma substring.")
     @GetMapping(path = "/overdues")
-    public ResponseEntity getOverdueCompanyBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm ){
+    public ResponseEntity getOverdueCompaniesBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm){
         return new ResponseEntity(companyService.getOverdueCompaniesBySearchTermAndStatus(pageable, searchTerm), HttpStatus.OK);
     }
 
@@ -97,8 +97,8 @@ public class CompanyController {
     })
     @Operation(description = "Habilita ou desabilita a empresa pelo status.")
     @DeleteMapping
-    public ResponseEntity disableCompany(@RequestParam Long code){
-        return new ResponseEntity(companyService.disableCompany(code), HttpStatus.OK);
+    public ResponseEntity disableCompany(@RequestParam String id){
+        return new ResponseEntity(companyService.disableCompany(id), HttpStatus.OK);
     }
 
 }

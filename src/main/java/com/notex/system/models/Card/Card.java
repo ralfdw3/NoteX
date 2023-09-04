@@ -35,10 +35,9 @@ public class Card {
         this.status = request.getStatus();
     }
 
-    public void updateCard(CardRequest request, Company company) {
+    public void updateCard(CardRequest request) {
         this.description = request.getDescription();
         this.appearance = request.getAppearance();
-        this.company = company;
         this.status = request.getStatus();
     }
 }

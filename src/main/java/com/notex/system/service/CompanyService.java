@@ -23,12 +23,46 @@ public class CompanyService {
 
     @Transactional
     public Company createCompany(CompanyRequest request) {
-        checkIfCompanyNameIsValid(request);
-        checkIfEmailOrPhoneIsValid(request);
+        validations(request);
 
         Company company = new Company(request);
 
         return companyRepository.save(company);
+    }
+
+    @Transactional
+    public CompanyResponse updateCompany(CompanyRequest companyRequest) {
+        validations(companyRequest);
+        Company company = findCompanyById(companyRequest.getId());
+
+        updateAndSaveCompany(company, companyRequest);
+
+        return new CompanyResponse(company);
+    }
+
+    private Company updateAndSaveCompany(Company company, CompanyRequest companyRequest) {
+        company.updateCompany(companyRequest);
+        return companyRepository.save(company);
+    }
+
+    private void validations(CompanyRequest companyRequest) {
+        checkIfEmailOrPhoneIsValid(companyRequest);
+        checkIfCompanyNameIsValid(companyRequest);
+        checkIfCodeIsInUse(companyRequest);
+    }
+
+    @Transactional
+    public CompanyResponse disableCompany(String id) {
+        Company company = findCompanyById(id);
+        company.updateCompanyStatus(CompanyStatus.INATIVO);
+        companyRepository.save(company);
+        return new CompanyResponse(company);
+    }
+
+    public Company findAndUpdateOrCreateNewCompany(CompanyRequest request) {
+        Optional<Company> company = companyRepository.findByCode(request.getCode());
+
+        return company.map(value -> updateAndSaveCompany(value, request)).orElseGet(() -> createCompany(request));
     }
 
     private static void checkIfEmailOrPhoneIsValid(CompanyRequest request) {
@@ -43,34 +77,16 @@ public class CompanyService {
         }
     }
 
-    @Transactional
-    public CompanyResponse updateCompany(CompanyRequest companyRequest) {
-        Company company = findCompanyByCode(companyRequest.getCode());
-        updateAndSaveCompany(company, companyRequest);
+    private void checkIfCodeIsInUse(CompanyRequest companyRequest) {
+        Long requestCode = companyRequest.getCode();
 
-        return new CompanyResponse(company);
+        if (existsCompanyByCode(requestCode)){
+            throw new BadRequestException("Já existe uma empresa cadastrada com este código.");
+        }
     }
 
-    private Company updateAndSaveCompany(Company company, CompanyRequest companyRequest) {
-        checkIfEmailOrPhoneIsValid(companyRequest);
-        checkIfCompanyNameIsValid(companyRequest);
-
-        company.updateCompany(companyRequest);
-        return companyRepository.save(company);
-    }
-
-    @Transactional
-    public CompanyResponse disableCompany(Long code) {
-        Company company = findCompanyByCode(code);
-        company.updateCompanyStatus(CompanyStatus.INATIVO);
-        companyRepository.save(company);
-        return new CompanyResponse(company);
-    }
-
-    public Company findAndUpdateOrCreateNewCompany(CompanyRequest request) {
-        Optional<Company> company = companyRepository.findByCode(request.getCode());
-
-        return company.map(value -> updateAndSaveCompany(value, request)).orElseGet(() -> createCompany(request));
+    private boolean existsCompanyByCode(Long code) {
+        return companyRepository.findByCode(code).isPresent();
     }
 
     private static boolean phoneAndEmailEmpty(CompanyRequest companyRequest) {
@@ -82,7 +98,8 @@ public class CompanyService {
     }
 
     public CompanyResponse getCompanyByCode(Long code) {
-        Company company = findCompanyByCode(code);
+        Company company = companyRepository.findByCode(code)
+                .orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
 
         return new CompanyResponse(company);
     }
@@ -92,18 +109,20 @@ public class CompanyService {
     }
 
     public Page<Company> getCompaniesBySearchTerm(Pageable pageable, String searchTerm) {
-        return companyRepository.findByNameContainingIgnoreCase(pageable, searchTerm);
+        return companyRepository.findByNameContainingIgnoreCaseOrderByCode(pageable, searchTerm);
     }
 
     public Page<Company> getOverdueCompaniesBySearchTermAndStatus(Pageable pageable, String searchTerm) {
-        return companyRepository.findByNameContainingIgnoreCaseAndStatus(pageable, searchTerm, CompanyStatus.INADIMPLENTE);
+        return companyRepository.findByNameContainingIgnoreCaseAndStatusOrderByCode(pageable, searchTerm, CompanyStatus.INADIMPLENTE);
     }
 
     public Page<Company> getAllOverdueCompanies(Pageable pageable) {
         return companyRepository.findAllByStatusOrderByCode(pageable, CompanyStatus.INADIMPLENTE);
     }
 
-    private Company findCompanyByCode(Long code){
-        return companyRepository.findByCode(code).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
+    private Company findCompanyById(String id){
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
     }
+
 }

@@ -37,7 +37,7 @@ public class CompanyServiceTest {
 
         when(companyRepository.save(companyDefault)).thenReturn(companyDefault);
         when(companyRepository.findByIdAndStatus(companyDefault.getId())).thenReturn(Optional.ofNullable(companyDefault));
-        when(companyRepository.findByNameContainingIgnoreCase("validSearchTerm")).thenReturn(List.of(companyDefault));
+        when(companyRepository.findByNameContainingIgnoreCaseOrderByCode("validSearchTerm")).thenReturn(List.of(companyDefault));
     }
 
     @Test
