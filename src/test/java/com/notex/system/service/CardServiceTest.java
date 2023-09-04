@@ -1,12 +1,10 @@
 package com.notex.system.service;
 
-import com.notex.system.dto.CardRequest;
-import com.notex.system.dto.CardResponse;
-import com.notex.system.dto.CardUpdateRequest;
+import com.notex.system.models.Card.CardRequest;
+import com.notex.system.models.Card.CardResponse;
 import com.notex.system.exceptions.NotFoundException;
-import com.notex.system.models.Card;
+import com.notex.system.models.Card.Card;
 import com.notex.system.repository.CardRepository;
-import com.notex.system.service.impl.CardService;
 import com.notex.system.stubs.CardStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +36,7 @@ public class CardServiceTest {
 
     @Test
     public void Should_ReturnCardResponse_When_CreatingANewCard () {
-        CardResponse response = cardService.createCard(cardRequest);
+        CardResponse response = cardService.persistNewCard(cardRequest);
 
         assertEquals(cardDefault.getTitle(), response.getTitle());
         assertEquals(cardDefault.getDescription(), response.getDescription());

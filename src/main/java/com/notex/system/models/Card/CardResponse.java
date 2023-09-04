@@ -1,7 +1,7 @@
-package com.notex.system.dto;
+package com.notex.system.models.Card;
 
+import com.notex.system.models.Company.CompanyResponse;
 import com.notex.system.enums.CardStatus;
-import com.notex.system.models.Card;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

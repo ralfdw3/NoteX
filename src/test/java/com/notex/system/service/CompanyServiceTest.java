@@ -1,12 +1,10 @@
 package com.notex.system.service;
 
-import com.notex.system.dto.CompanyRequest;
-import com.notex.system.dto.CompanyResponse;
-import com.notex.system.dto.CompanyUpdateRequest;
+import com.notex.system.models.Company.CompanyRequest;
+import com.notex.system.models.Company.CompanyResponse;
 import com.notex.system.exceptions.NotFoundException;
-import com.notex.system.models.Company;
+import com.notex.system.models.Company.Company;
 import com.notex.system.repository.CompanyRepository;
-import com.notex.system.service.impl.CompanyService;
 import com.notex.system.stubs.CompanyStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +37,7 @@ public class CompanyServiceTest {
 
         when(companyRepository.save(companyDefault)).thenReturn(companyDefault);
         when(companyRepository.findByIdAndStatus(companyDefault.getId())).thenReturn(Optional.ofNullable(companyDefault));
-        when(companyRepository.findByNameContainingIgnoreCase("validSearchTerm")).thenReturn(List.of(companyDefault));
+        when(companyRepository.findByNameContainingIgnoreCaseOrderByCode("validSearchTerm")).thenReturn(List.of(companyDefault));
     }
 
     @Test
@@ -76,7 +74,7 @@ public class CompanyServiceTest {
 
     @Test
     public void Should_ReturnCompanyResponse_When_FindingACompanyById () {
-        CompanyResponse response = companyService.getCompanyById(companyDefault.getId());
+        CompanyResponse response = companyService.getCompanyByCode(companyDefault.getId());
 
         assertEquals(companyDefault.getId(), response.getId());
         assertEquals(companyDefault.getName(), response.getName());
@@ -85,7 +83,7 @@ public class CompanyServiceTest {
 
     @Test
     public void Should_ThrowNotFoundException_When_FindingCompanyWithInvalidId () {
-        NotFoundException exception = assertThrows(NotFoundException.class, () -> companyService.getCompanyById("notFound"));
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> companyService.getCompanyByCode("notFound"));
         assertEquals("Empresa não encontrada.", exception.getMessage());
     }
 

@@ -1,33 +1,22 @@
-package com.notex.system.dto;
+package com.notex.system.models.Card;
 
 import com.notex.system.enums.CardStatus;
-import jakarta.validation.constraints.NotBlank;
+import com.notex.system.models.Company.CompanyRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
-@Getter
+
 @AllArgsConstructor
-public class CardUpdateRequest {
-    @NotBlank
+@Getter
+public class CardRequest {
     String id;
-
     String description;
-
     @NotNull
     LocalDate appearance;
-
     @NotNull
-    String companyCode;
-
-    @NotBlank
-    String companyName;
-
-    String companyPhone;
-
-    String companyEmail;
-
+    CompanyRequest companyRequest;
     @NotNull
     CardStatus status;
 

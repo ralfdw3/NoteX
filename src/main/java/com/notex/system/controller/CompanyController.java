@@ -1,9 +1,7 @@
 package com.notex.system.controller;
 
-import com.notex.system.dto.CompanyRequest;
-import com.notex.system.dto.CompanyUpdateRequest;
-import com.notex.system.enums.CompanyStatus;
-import com.notex.system.service.impl.CompanyService;
+import com.notex.system.models.Company.CompanyRequest;
+import com.notex.system.service.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -39,7 +37,7 @@ public class CompanyController {
     })
     @Operation(description = "Atualiza a empresa")
     @PatchMapping
-    public ResponseEntity updateCompany(@RequestBody @Valid CompanyUpdateRequest request){
+    public ResponseEntity updateCompany(@RequestBody @Valid CompanyRequest request){
         return new ResponseEntity(companyService.updateCompany(request), HttpStatus.OK);
     }
 
@@ -49,8 +47,8 @@ public class CompanyController {
     })
     @Operation(description = "Busca uma empresa no banco de dados pelo id.")
     @GetMapping(path = "/{id}")
-    public ResponseEntity getCompanyById(@PathVariable("id") String code){
-        return new ResponseEntity(companyService.getCompanyById(code), HttpStatus.OK);
+    public ResponseEntity getCompanyById(@PathVariable("id") Long code){
+        return new ResponseEntity(companyService.getCompanyByCode(code), HttpStatus.OK);
     }
 
     @ApiResponses(value = {
@@ -79,7 +77,7 @@ public class CompanyController {
     })
     @Operation(description = "Busca uma lista de empresas no banco de dados por uma substring.")
     @GetMapping(path = "/actives")
-    public ResponseEntity getCompanyBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm ){
+    public ResponseEntity getCompaniesBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm){
         return new ResponseEntity(companyService.getCompaniesBySearchTerm(pageable, searchTerm), HttpStatus.OK);
     }
 
@@ -89,7 +87,7 @@ public class CompanyController {
     })
     @Operation(description = "Busca uma lista de empresas inadimplentes no banco de dados por uma substring.")
     @GetMapping(path = "/overdues")
-    public ResponseEntity getOverdueCompanyBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm ){
+    public ResponseEntity getOverdueCompaniesBySearchTerm(@PageableDefault(size = 10) Pageable pageable, @RequestParam String searchTerm){
         return new ResponseEntity(companyService.getOverdueCompaniesBySearchTermAndStatus(pageable, searchTerm), HttpStatus.OK);
     }
 
@@ -99,8 +97,8 @@ public class CompanyController {
     })
     @Operation(description = "Habilita ou desabilita a empresa pelo status.")
     @DeleteMapping
-    public ResponseEntity disableCompany(@RequestParam String code){
-        return new ResponseEntity(companyService.disableCompany(code), HttpStatus.OK);
+    public ResponseEntity disableCompany(@RequestParam String id){
+        return new ResponseEntity(companyService.disableCompany(id), HttpStatus.OK);
     }
 
 }

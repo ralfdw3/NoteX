@@ -1,12 +1,13 @@
-package com.notex.system.service.impl;
+package com.notex.system.service;
 
-import com.notex.system.dto.*;
 import com.notex.system.enums.CardStatus;
 import com.notex.system.exceptions.NotFoundException;
-import com.notex.system.models.Card;
-import com.notex.system.models.Company;
+import com.notex.system.models.Card.Card;
+import com.notex.system.models.Card.CardRequest;
+import com.notex.system.models.Card.CardResponse;
+import com.notex.system.models.Company.Company;
+import com.notex.system.models.Company.CompanyResponse;
 import com.notex.system.repository.CardRepository;
-import com.notex.system.service.CardServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,16 +19,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CardService implements CardServiceInterface {
+public class CardService{
 
     private final CardRepository cardRepository;
     private final CompanyService companyService;
 
-    @Override
     @Transactional
-    public CardResponse createCard(CardRequest request) {
-        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName(),
-                request.getCompanyPhone(), request.getCompanyEmail());
+    public CardResponse persistNewCard(CardRequest request) {
+        Company company = companyService.findAndUpdateOrCreateNewCompany(request.getCompanyRequest());
         Card card = new Card(request, company);
 
         cardRepository.save(card);
@@ -35,25 +34,23 @@ public class CardService implements CardServiceInterface {
         return new CardResponse(card);
     }
 
-    @Override
     @Transactional
-    public CardResponse updateCard(CardUpdateRequest request) {
+    public CardResponse updateCard(CardRequest request) {
         Card card = findCardById(request.getId());
-        Company company = companyService.findOrCreateCompany(request.getCompanyCode(), request.getCompanyName(),
-                request.getCompanyPhone(), request.getCompanyEmail());
-        card.updateCard(request, company);
+        companyService.updateCompany(request.getCompanyRequest());
+        card.updateCard(request);
+
         cardRepository.save(card);
 
         return new CardResponse(card);
     }
 
-    @Override
     public CardResponse getCardById(String id) {
         Card card = findCardById(id);
+
         return new CardResponse(card);
     }
 
-    @Override
     @Transactional
     public CardResponse deleteCardById(String id) {
         Card card = findCardById(id);
@@ -62,12 +59,10 @@ public class CardService implements CardServiceInterface {
         return new CardResponse(card);
     }
 
-    @Override
     public List<Card> getAllActiveCards() {
         return cardRepository.findAllByStatusOrStatus(CardStatus.ABERTO, CardStatus.EM_NEGOCIACAO, Sort.by("appearance").ascending());
     }
 
-    @Override
     public Page<Card> getAllCardsByCompany(Pageable pageable, String companyId) {
         return cardRepository.findAllByCompanyId(pageable, companyId);
     }

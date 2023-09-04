@@ -1,8 +1,7 @@
 package com.notex.system.controller;
 
-import com.notex.system.dto.CardRequest;
-import com.notex.system.dto.CardUpdateRequest;
-import com.notex.system.service.impl.CardService;
+import com.notex.system.models.Card.CardRequest;
+import com.notex.system.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -29,7 +28,7 @@ public class CardController {
     @Operation(description = "Cria um novo card, vinculando o mesmo a uma 'company'")
     @PostMapping
     public ResponseEntity createCard(@RequestBody @Valid CardRequest request){
-        return new ResponseEntity(cardService.createCard(request), HttpStatus.CREATED);
+        return new ResponseEntity(cardService.persistNewCard(request), HttpStatus.CREATED);
     }
 
     @ApiResponses(value = {
@@ -38,7 +37,7 @@ public class CardController {
     })
     @Operation(description = "Atualiza o card específico")
     @PatchMapping
-    public ResponseEntity updateCard(@RequestBody @Valid CardUpdateRequest request){
+    public ResponseEntity updateCard(@RequestBody @Valid CardRequest request){
         return new ResponseEntity(cardService.updateCard(request), HttpStatus.OK);
     }
 

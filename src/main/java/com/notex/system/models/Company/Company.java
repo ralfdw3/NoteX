@@ -1,7 +1,5 @@
-package com.notex.system.models;
+package com.notex.system.models.Company;
 
-import com.notex.system.dto.CompanyRequest;
-import com.notex.system.dto.CompanyUpdateRequest;
 import com.notex.system.enums.CompanyStatus;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,35 +19,27 @@ public class Company {
     @Id
     String id;
     String name;
-    String code;
+    Long code;
     LocalDateTime creation = LocalDateTime.now();
     CompanyStatus status = CompanyStatus.ATIVO;
     String phone;
     String email;
 
-    public Company(CompanyRequest request) {
-        this.name = request.getName();
-        this.code = request.getCode();
-        this.phone = request.getCompanyPhone();
-        this.email = request.getCompanyEmail();
-    }
-
-    public Company(String name, String code, String phone, String email) {
-        this.name = name;
-        this.code = code;
-        this.phone = phone;
-        this.email = email;
-    }
-
     public void updateCompanyStatus(CompanyStatus status) {
         this.status = status;
     }
 
-    public void updateCompany(CompanyUpdateRequest request) {
+    public void updateCompany(CompanyRequest request) {
         this.name = request.getName();
         this.code = request.getCode();
-        this.status = request.getStatus();
-        this.email = request.getCompanyEmail();
-        this.phone = request.getCompanyPhone();
+        this.email = request.getEmail();
+        this.phone = request.getPhone();
+    }
+
+    public Company(CompanyRequest request) {
+        this.name = request.getName();
+        this.code = request.getCode();
+        this.email = request.getEmail();
+        this.phone = request.getPhone();
     }
 }

@@ -1,5 +1,8 @@
 package com.notex.system.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum CardStatus {
     ABERTO("ABERTO"), EM_NEGOCIACAO("EM_NEGOCIACAO"), CONCLUIDO("CONCLUIDO");
 
@@ -9,7 +12,4 @@ public enum CardStatus {
         this.id = id;
     }
 
-    public String getId() {
-        return id;
-    }
 }
