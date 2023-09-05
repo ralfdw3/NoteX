@@ -1,5 +1,4 @@
 spring:
   data:
     mongodb:
-      uri: ${DATABASE_URL}
-      database: ${DATABASE_NAME}
+      uri: mongodb://localhost:27017/note-x
