@@ -1,5 +1,4 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://rdwink:GmDzAeyCcyAwmZbr@cluster0.xadhgav.mongodb.net/?retryWrites=true&w=majority
-      database: note-x
+      uri: mongodb://localhost:27017/note-x
