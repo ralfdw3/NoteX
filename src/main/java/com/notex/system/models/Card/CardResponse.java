@@ -2,9 +2,7 @@ package com.notex.system.models.Card;
 
 import com.notex.system.models.Company.CompanyResponse;
 import com.notex.system.enums.CardStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,6 +10,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Builder
+@EqualsAndHashCode
+@ToString
 public class CardResponse {
     String id;
     String description;

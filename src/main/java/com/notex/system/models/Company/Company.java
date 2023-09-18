@@ -1,10 +1,7 @@
 package com.notex.system.models.Company;
 
 import com.notex.system.enums.CompanyStatus;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@Builder
 public class Company {
     @Id
     String id;
@@ -32,6 +30,7 @@ public class Company {
     public void updateCompany(CompanyRequest request) {
         this.name = request.getName();
         this.code = request.getCode();
+        this.status = request.getStatus();
         this.email = request.getEmail();
         this.phone = request.getPhone();
     }

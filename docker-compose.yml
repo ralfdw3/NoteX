@@ -1,0 +1,23 @@
+version: '1'
+services:
+    mongo:
+        image: mongo:latest
+        networks:
+            - local-network
+
+    backend:
+        image: ralfdw3/notex-server:latest
+        ports:
+            - "8080:8080"
+        networks:
+            - local-network
+
+    frontend:
+        image: ralfdw3/notex-app:latest
+        ports:
+            - "5173:5173"
+        networks:
+            - local-network
+
+networks:
+    local-network:

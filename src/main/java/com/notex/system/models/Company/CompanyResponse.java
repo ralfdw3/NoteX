@@ -2,10 +2,14 @@ package com.notex.system.models.Company;
 
 import com.notex.system.enums.CompanyStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
+@Builder
+@EqualsAndHashCode
 public class CompanyResponse {
     String id;
     String name;
