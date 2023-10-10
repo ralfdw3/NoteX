@@ -30,7 +30,6 @@ public class Company {
     public void updateCompany(CompanyRequest request) {
         this.name = request.getName();
         this.code = request.getCode();
-        this.status = request.getStatus();
         this.email = request.getEmail();
         this.phone = request.getPhone();
     }
